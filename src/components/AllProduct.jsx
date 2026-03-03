@@ -34,20 +34,39 @@ export default function AllProduct({ selectedCat, searchResult }) {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["products", selectedCat, searchResult, page],
     queryFn: getProducts,
-    placeholderData: (prev) => prev, 
+    placeholderData: (prev) => prev,
   });
 
   const products = data?.data?.results ?? data?.data ?? [];
   const totalCount = data?.data?.count ?? products.length;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
-  if (isError) return <Error message="Failed to load products" onRetry={refetch} />;
+  if (isError)
+    return <Error message="Failed to load products" onRetry={refetch} />;
+
+  const [showColdStart, setShowColdStart] = useState(false);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setShowColdStart(false);
+      return;
+    }
+    const timeout = setTimeout(() => setShowColdStart(true), 5000);
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
 
   return (
     <div className="all-products-wrapper">
+      {showColdStart && (
+        <p className="waking-server">
+          ⏳ Server is starting up, please wait a few seconds...
+        </p>
+      )}
       <div className="products-grid">
         {isLoading
-          ? Array(PAGE_SIZE).fill(0).map((_, i) => <ProductSkel key={i} />)
+          ? Array(PAGE_SIZE)
+              .fill(0)
+              .map((_, i) => <ProductSkel key={i} />)
           : products.map((product) => (
               <div
                 className="product-card"
@@ -86,7 +105,9 @@ export default function AllProduct({ selectedCat, searchResult }) {
 
           <div className="page-numbers">
             {Array.from({ length: totalPages }, (_, i) => i + 1)
-              .filter((p) => p === 1 || p === totalPages || Math.abs(p - page) <= 1)
+              .filter(
+                (p) => p === 1 || p === totalPages || Math.abs(p - page) <= 1,
+              )
               .reduce((acc, p, idx, arr) => {
                 if (idx > 0 && p - arr[idx - 1] > 1) acc.push("...");
                 acc.push(p);
@@ -94,7 +115,9 @@ export default function AllProduct({ selectedCat, searchResult }) {
               }, [])
               .map((p, i) =>
                 p === "..." ? (
-                  <span key={`dot-${i}`} className="page-dots">…</span>
+                  <span key={`dot-${i}`} className="page-dots">
+                    …
+                  </span>
                 ) : (
                   <button
                     key={p}
@@ -103,7 +126,7 @@ export default function AllProduct({ selectedCat, searchResult }) {
                   >
                     {p}
                   </button>
-                )
+                ),
               )}
           </div>
 

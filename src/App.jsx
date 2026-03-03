@@ -59,19 +59,6 @@ function App() {
     localStorage.setItem("product_type", JSON.stringify(selectedCat));
   }, [selectedCat]);
 
-  const [showMessageColdStart, setShowMessageColdStart] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setShowMessageColdStart(true), 5000);
-
-    apiClient.finally(() => {
-      clearTimeout(timeout);
-      setShowMessageColdStart(false);
-    });
-
-    return () => clearTimeout(timeout);
-  }, []);
-
   return (
     <>
       <Toaster
