@@ -4,7 +4,7 @@ import apiClient from "../api/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ProductSkel from "../skeleton/productSkel";
+import ProductSkel from "../skeleton/ProductSkel";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
