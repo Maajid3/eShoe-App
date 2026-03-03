@@ -5,6 +5,24 @@
   position: relative;
 }
 
+.waking-message {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  padding: 12px 20px;
+  background-color: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 20px auto;
+  animation: fadein 0.5s ease-in;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .header {
   width: 100%;
   position: relative;

@@ -23,6 +23,7 @@ const Orders = lazy(() => import("./components/Orders"));
 const ChangePass = lazy(() => import("./components/ChangePass"));
 
 import { usePageTitle } from "./hooks/useRouteTitle";
+import apiClient from "./api/apiClient";
 
 function App() {
   usePageTitle();
@@ -58,6 +59,19 @@ function App() {
     localStorage.setItem("product_type", JSON.stringify(selectedCat));
   }, [selectedCat]);
 
+  const [showMessageColdStart, setShowMessageColdStart] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setShowMessageColdStart(true), 5000);
+
+    apiClient.finally(() => {
+      clearTimeout(timeout);
+      setShowMessageColdStart(false);
+    });
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <>
       <Toaster
@@ -73,6 +87,11 @@ function App() {
       />
 
       <div className="app-container">
+        {showMessageColdStart && (
+          <p className="waking-server">
+            ⏳ Server is starting up, please wait a few seconds...
+          </p>
+        )}
         <header className="header">
           <Header toggleSide={toggleSidebar} onSearch={setSearchResult} />
         </header>
