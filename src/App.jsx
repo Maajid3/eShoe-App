@@ -74,11 +74,6 @@ function App() {
       />
 
       <div className="app-container">
-        {showMessageColdStart && (
-          <p className="waking-server">
-            ⏳ Server is starting up, please wait a few seconds...
-          </p>
-        )}
         <header className="header">
           <Header toggleSide={toggleSidebar} onSearch={setSearchResult} />
         </header>
