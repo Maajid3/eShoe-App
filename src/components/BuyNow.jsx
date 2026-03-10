@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 function BuyNow() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["id", id],
@@ -44,6 +45,13 @@ function BuyNow() {
   }, [isSuccess, addError]);
 
   const handleAddCart = () => {
+    const token = localStorage.getItem("access");
+    if (!token) {
+      alert("Please Login before adding items");
+      navigate("/login");
+      return;
+    }
+
     addToCart({
       product_id: productSelect.id,
       size_id: selectedSize,
