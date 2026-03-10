@@ -10,15 +10,15 @@ import ErrorBoundary from "./ErrorBoundary.jsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
-  <ErrorBoundary>
-    <BrowserRouter>
-      <StrictMode>
+  <StrictMode>
+    <ErrorBoundary>
+      <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <UserProvider>
             <App />
           </UserProvider>
         </QueryClientProvider>
-      </StrictMode>
-    </BrowserRouter>
-  </ErrorBoundary>
+      </BrowserRouter>
+    </ErrorBoundary>
+  </StrictMode>,
 );
