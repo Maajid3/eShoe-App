@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import ProductSkel from "../skeleton/ProductSkel";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import notFoundSvg from "../assets/svg/404Error.svg";
 
 const PAGE_SIZE = 12;
 
@@ -41,9 +42,6 @@ export default function AllProduct({ selectedCat, searchResult }) {
   const totalCount = data?.data?.count ?? products.length;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
-  if (isError)
-    return <Error message="Failed to load products" onRetry={refetch} />;
-
   const [showColdStart, setShowColdStart] = useState(false);
 
   useEffect(() => {
@@ -54,6 +52,9 @@ export default function AllProduct({ selectedCat, searchResult }) {
     const timeout = setTimeout(() => setShowColdStart(true), 5000);
     return () => clearTimeout(timeout);
   }, [isLoading]);
+
+  if (isError)
+    return <Error message="Failed to load products" onRetry={refetch} />;
 
   return (
     <div className="all-products-wrapper">
@@ -89,7 +90,7 @@ export default function AllProduct({ selectedCat, searchResult }) {
 
       {!isLoading && products.length === 0 && (
         <div className="empty-products">
-          <p>No products found</p>
+          <img src={notFoundSvg} alt="NotFound" />
         </div>
       )}
 

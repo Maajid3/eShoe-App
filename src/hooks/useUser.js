@@ -7,9 +7,11 @@ const fetchProfile = async () => {
 };
 
 export const useUser = () => {
+  const token = localStorage.getItem("access");
   return useQuery({
     queryKey: ["user"],
     queryFn: fetchProfile,
+    enabled: !!token,
     retry: 2,
   });
 };

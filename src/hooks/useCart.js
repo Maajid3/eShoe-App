@@ -3,13 +3,15 @@ import apiClient from "../api/apiClient";
 
 const cartFetch = async () => {
   const res = await apiClient.get("carts/");
-  return res.data.results ?? res.data; 
+  return res.data.results ?? res.data;
 };
 
 export const useCart = () => {
+  const token = localStorage.getItem("access");
   return useQuery({
     queryKey: ["cart"],
     queryFn: cartFetch,
+    enabled: !!token,
   });
 };
 
@@ -78,7 +80,7 @@ export const useRemoveItem = () => {
 // clear entire cart after order
 const clearCartItems = async (items) => {
   await Promise.all(
-    items.map((item) => apiClient.delete(`carts-items/${item.id}/`))
+    items.map((item) => apiClient.delete(`carts-items/${item.id}/`)),
   );
 };
 
