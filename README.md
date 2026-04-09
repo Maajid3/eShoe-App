@@ -13,7 +13,7 @@
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=flat-square)](https://your-eshoe.vercel.app)
 [![Backend API](https://img.shields.io/badge/Backend-Django_API-092E20?style=flat-square)]
 
-</div>
+</div> 
 
 ## 📸 Preview
 
